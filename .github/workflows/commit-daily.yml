@@ -2,7 +2,7 @@ name: Fake Frequent Commits
 
 on:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 * * * *'  # Une fois par heure (UTC)
   workflow_dispatch:
 
 jobs:
@@ -12,14 +12,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Fake multiple commits
+      - name: Fake single commit
         run: |
-          for i in {1..5}; do
-            echo "$(date) fake commit \$i" >> activity.log
-            git config user.name "${{ github.actor }}"
-            git config user.email "${{ github.actor }}@users.noreply.github.com"
-            git add activity.log
-            git commit -m "Fake commit \$i at \$(date)"
-            sleep 10
-          done
+          echo "$(date) fake commit" >> activity.log
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git add activity.log
+          git commit -m "Fake commit at $(date)" || echo "Nothing to commit"
           git push
