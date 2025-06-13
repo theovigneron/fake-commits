@@ -2,7 +2,7 @@ name: Fake Daily Commit
 
 on:
   schedule:
-    - cron: '0 10 * * *'  # Tous les jours à 10h UTC
+    - cron: '*/5 * * * *'  # Tous les jours à 10h UTC
   workflow_dispatch:
 
 jobs:
